@@ -10,7 +10,7 @@ st.set_page_config(page_title="Asteroid Data Dashboard", layout="wide")
 st.title("🌠 Asteroid Insights Dashboard")
 st.markdown("Static + Real-Time NASA Asteroid Data Visualized")
 
-# Load static data
+
 @st.cache_data
 def load_static_data():
     df = pd.read_csv('static_asteroids_data.csv')
@@ -20,7 +20,7 @@ def load_static_data():
     df['estimated_diameter_max_km'] = pd.to_numeric(df['estimated_diameter_max_km'], errors='coerce')
     return df
 
-# Load dynamic API data
+
 @st.cache_data
 def fetch_nasa_data():
     API_KEY = ''
@@ -48,7 +48,7 @@ def fetch_nasa_data():
             })
     return pd.DataFrame(neos)
 
-# Load & combine
+
 static_df = load_static_data()
 dynamic_df = fetch_nasa_data()
 combined_df = pd.concat([static_df, dynamic_df], ignore_index=True)
@@ -63,7 +63,7 @@ elif hazard_filter == "No":
 
 st.markdown("### 📊 Visualizations")
 
-# Visualization 1: Diameter vs Velocity
+
 fig1 = px.scatter(
     combined_df,
     x="estimated_diameter_max_km",
@@ -78,7 +78,7 @@ fig1 = px.scatter(
 )
 st.plotly_chart(fig1, use_container_width=True)
 
-# Visualization 2: Count by Orbiting Body
+
 orbit_counts = combined_df['orbiting_body'].value_counts().reset_index()
 orbit_counts.columns = ['orbiting_body', 'count']
 
@@ -91,7 +91,6 @@ fig2 = px.bar(
 )
 st.plotly_chart(fig2, use_container_width=True)
 
-# Visualization 3: Diameter Range Histogram
 fig3 = px.histogram(
     combined_df,
     x='estimated_diameter_max_km',
@@ -102,7 +101,6 @@ fig3 = px.histogram(
 )
 st.plotly_chart(fig3, use_container_width=True)
 
-# Visualization 4: Miss Distance vs Velocity
 fig4 = px.scatter(
     combined_df,
     x='miss_distance_km',
@@ -116,7 +114,6 @@ fig4 = px.scatter(
 )
 st.plotly_chart(fig4, use_container_width=True)
 
-# Data Table
 st.markdown("### 📋 Combined Asteroid Data")
 st.dataframe(combined_df)
 
