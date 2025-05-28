@@ -23,7 +23,7 @@ def load_static_data():
 # Load dynamic API data
 @st.cache_data
 def fetch_nasa_data():
-    API_KEY = 'bp450nspD4jPDr8xJdZ0nTcrG1X89zqn9Y6I7Kq9'
+    API_KEY = ''
     today = pd.Timestamp.today().strftime('%Y-%m-%d')
     url = f'https://api.nasa.gov/neo/rest/v1/feed?start_date={today}&end_date={today}&api_key={API_KEY}'
     response = requests.get(url)
